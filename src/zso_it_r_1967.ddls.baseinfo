@@ -3,10 +3,13 @@
 {
 "FROM":
 [
-"ZTSO_HD_1967"
+"ZTSO_IT_1967"
 ],
 "ASSOCIATED":
-[],
+[
+"I_CURRENCY",
+"ZSO_HD_R_1967"
+],
 "BASE":
 [],
 "ANNO_REF":

@@ -8,11 +8,12 @@
     dataClass: #MIXED
 }
 define view entity ZCDS_SALES_ITEM_1967
-  as select from zsales_det_1967 as Detail
+  as select from ztso_it_1967 as Detail
 
 {
   key item_id          as Id,
-  key item_uuid        as UUID,
+  key item_uuid        as item_UUID,
+      sales_uuid       as sales_UUID,
       name             as Name,
       description      as Description,
       releaseddate     as Releaseddate,
