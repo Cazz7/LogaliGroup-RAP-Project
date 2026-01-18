@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition Sales Orders'
+define service ZSD_SALES_1967 {
+  expose ZSO_HD_C_1967 as Header;
+  expose ZSO_IT_C_1967 as Detail;
+}

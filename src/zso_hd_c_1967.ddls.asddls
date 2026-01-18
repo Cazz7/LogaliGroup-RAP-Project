@@ -1,6 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_ALLOWED
 @EndUserText.label: 'Sales Order Detail Consumption Entity'
 @Metadata.ignorePropagatedAnnotations: false
+@Metadata.allowExtensions: true
 define root view entity ZSO_HD_C_1967
   provider contract transactional_query
   as projection on ZSO_HD_R_1967
