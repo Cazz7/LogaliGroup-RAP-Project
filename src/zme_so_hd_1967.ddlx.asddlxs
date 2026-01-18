@@ -1,0 +1,116 @@
+@Metadata.layer: #CORE
+
+@UI: { headerInfo: { typeName: 'Sales Order',
+                     typeNamePlural: 'Sales Orders',
+                     title: {
+                        type: #STANDARD,
+                        value: 'SalesID' },
+                    description: {
+                        type: #STANDARD,
+                        value: 'Firstname'
+                    } },
+       presentationVariant: [{ sortOrder: [{ by: 'SalesID',
+                                             direction: #DESC }],
+                               visualizations: [{ type: #AS_LINEITEM }] }] }
+
+@Search.searchable: true
+annotate entity ZSO_HD_C_1967 with
+{
+  @UI.facet: [{ id: 'Sales',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Sales',
+                position: 10 },
+
+              { id: 'Item',
+                purpose: #STANDARD,
+                type: #LINEITEM_REFERENCE,
+                label: 'Item',
+                position: 20,
+                targetElement: '_Detail' } ]
+
+  @UI.hidden: true
+  SalesUUID;
+  @Search.defaultSearchElement: true
+  @UI: { lineItem: [{ position: 10,
+                      importance: #HIGH },
+
+                     { position: 10,
+                       importance: #HIGH,
+                       type: #FOR_ACTION,
+                       dataAction: 'acceptSale',
+                       label: 'Accept Sale' },
+
+                     { position: 20,
+                       importance: #HIGH,
+                       type: #FOR_ACTION,
+                       dataAction: 'rejectSale',
+                       label: 'Reject Sale' },
+
+                     { position: 30,
+                       importance: #HIGH,
+                       type: #FOR_ACTION,
+                       dataAction: 'deductSale',
+                       label: 'Discount',
+                       invocationGrouping: #CHANGE_SET }
+                   ],
+
+          selectionField: [{ position: 10 }],
+
+          identification: [{ position: 10, label: 'Sales ID' },
+
+                           { type: #FOR_ACTION,
+                             dataAction: 'acceptSale',
+                             label: 'Accept Sale',
+                             position: 10 },
+
+                           { type: #FOR_ACTION,
+                             dataAction: 'rejectSale',
+                             label: 'Reject Sale',
+                             position: 20 },
+
+                            { type: #FOR_ACTION,
+                             dataAction: 'deductSale',
+                             label: 'Discount',
+                             position: 30 }
+                          ]
+       }
+  SalesID;
+  @UI: { lineItem: [{  position:  20, importance:  #HIGH}],
+         identification: [{ position: 20 }],
+         selectionField: [{ position: 20 }] }
+  Email;
+  @UI: { lineItem: [{  position:  30, importance:  #HIGH}],
+         identification: [{ position: 30 }],
+         selectionField: [{ position: 30 }] }
+  Firstname;
+  @UI: { lineItem: [{  position:  40, importance:  #MEDIUM }],
+        identification: [{ position: 40 }] }
+  Lastname;
+  @UI: { lineItem: [{  position:  50, importance:  #MEDIUM }],
+        identification: [{ position: 50 }] }
+  Country;
+  @UI: { lineItem: [{  position:  60, importance:  #HIGH }],
+        identification: [{ position: 60 }] }
+  Deliverydate;
+  @UI: { lineItem: [{  position:  70, importance:  #HIGH }],
+          identification: [{ position: 70 }] }
+  Orderstatus;
+  @UI: { lineItem: [{  position:  80, importance:  #HIGH }],
+          identification: [{ position: 80 }] }
+  Imageurl;
+  @UI: { lineItem: [{  position:  90, importance:  #HIGH }],
+          identification: [{ position: 80 }] }
+  CreatedOn;
+  @UI: { lineItem: [{  position:  100, importance:  #HIGH }],
+          identification: [{ position: 100 }] }
+  CreatedBy;
+  @UI: { lineItem: [{  position:  110, importance:  #HIGH }],
+          identification: [{ position: 110 }] }
+  ChangedBy;
+  @UI.hidden: true
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+
+}
