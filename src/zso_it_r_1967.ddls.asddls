@@ -11,8 +11,8 @@ define view entity ZSO_IT_R_1967 as select from ztso_it_1967
 association to parent ZSO_HD_R_1967 as _Header on $projection.SalesUUID = _Header.SalesUUID
 association [1..1] to I_Currency as _Currency on $projection.Currency = _Currency.Currency
 {
-    key item_uuid as ItemUuid,
-    item_id as ItemId,
+    key item_uuid as ItemUUID,
+    item_id as ItemID,
     sales_uuid as SalesUUID,
     name as Name,
     description as Description,

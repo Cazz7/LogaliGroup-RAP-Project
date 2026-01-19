@@ -1,11 +1,12 @@
 @AccessControl.authorizationCheck: #NOT_ALLOWED
 @EndUserText.label: 'Sales Order Detail Consumption Entity'
 @Metadata.ignorePropagatedAnnotations: false
+@Metadata.allowExtensions: true
 define view entity ZSO_IT_C_1967
   as projection on ZSO_IT_R_1967
 {
-    key ItemUuid,
-    ItemId,
+    key ItemUUID,
+    ItemID,
     SalesUUID,
     Name,
     Description,

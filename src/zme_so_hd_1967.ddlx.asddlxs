@@ -16,17 +16,11 @@
 @Search.searchable: true
 annotate entity ZSO_HD_C_1967 with
 {
-  @UI.facet: [{ id: 'Sales',
-                purpose: #STANDARD,
-                type: #IDENTIFICATION_REFERENCE,
-                label: 'Sales',
-                position: 10 },
-
-              { id: 'Item',
+  @UI.facet: [{ id: 'Detail',
                 purpose: #STANDARD,
                 type: #LINEITEM_REFERENCE,
-                label: 'Item',
-                position: 20,
+                label: 'Detail',
+                position: 10,
                 targetElement: '_Detail' } ]
 
   @UI.hidden: true
@@ -102,10 +96,10 @@ annotate entity ZSO_HD_C_1967 with
   @UI: { lineItem: [{  position:  90, importance:  #HIGH }],
           identification: [{ position: 80 }] }
   CreatedOn;
-  @UI: { lineItem: [{  position:  100, importance:  #HIGH }],
+  @UI: { lineItem: [{  position:  100, importance:  #LOW }],
           identification: [{ position: 100 }] }
   CreatedBy;
-  @UI: { lineItem: [{  position:  110, importance:  #HIGH }],
+  @UI: { lineItem: [{  position:  110, importance:  #LOW }],
           identification: [{ position: 110 }] }
   ChangedBy;
   @UI.hidden: true

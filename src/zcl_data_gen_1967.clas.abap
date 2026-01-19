@@ -57,13 +57,34 @@ DATA(LV_IT_UUID) = cl_system_uuid=>create_uuid_x16_static( ).
       quantity = '107'
        ) TO lt_detail.
 
+LV_IT_UUID = cl_system_uuid=>create_uuid_x16_static( ).
+      APPEND VALUE ztso_it_1967(
+      item_uuid = LV_IT_UUID
+      item_ID = '2000002'
+      sales_uuid = LV_HD_UUID
+      name = 'iPhone 16'
+      description = 'A flashy phone'
+      releaseddate = '20240915'
+      discontinueddate = '20290315'
+      price = '1250'
+      currency = 'USD'
+      height = '10'
+      width = '7'
+      depth = '0'
+      unitofmeasure = 'CM'
+      quantity = '998'
+       ) TO lt_detail.
+
+
     CATCH cx_uuid_error.
       "handle exception
       return.
   ENDTRY.
 
   DELETE FROM ztso_hd_1967.
+  DELETE FROM ztso_it_1967.
   INSERT ztso_hd_1967 FROM TABLE @lt_header.
+  INSERT ztso_it_1967 FROM TABLE @lt_detail.
 
 
   if sy-subrc = 0.

@@ -4,7 +4,6 @@
 define root view entity ZSO_HD_R_1967
   as select from ztso_hd_1967 as Header
   composition [0..*] of ZSO_IT_R_1967 as _Detail 
-  //association [0..1] to I_Currency as _Currency on $projection.Currency = _Currency.Currency
 {
 
   key sales_uuid            as SalesUUID,
