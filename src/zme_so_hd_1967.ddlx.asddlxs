@@ -39,13 +39,7 @@ annotate entity ZSO_HD_C_1967 with
                        importance: #HIGH,
                        type: #FOR_ACTION,
                        dataAction: 'rejectSale',
-                       label: 'Reject Sale' },
-
-                     { position: 30,
-                       importance: #HIGH,
-                       type: #FOR_ACTION,
-                       dataAction: 'deductSale',
-                       label: 'Discount',
+                       label: 'Reject Sale',
                        invocationGrouping: #CHANGE_SET }
                    ],
 
@@ -61,12 +55,7 @@ annotate entity ZSO_HD_C_1967 with
                            { type: #FOR_ACTION,
                              dataAction: 'rejectSale',
                              label: 'Reject Sale',
-                             position: 20 },
-
-                            { type: #FOR_ACTION,
-                             dataAction: 'deductSale',
-                             label: 'Discount',
-                             position: 30 }
+                             position: 20 }
                           ]
        }
   SalesID;

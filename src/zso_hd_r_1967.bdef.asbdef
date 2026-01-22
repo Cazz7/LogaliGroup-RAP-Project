@@ -1,0 +1,120 @@
+managed;
+strict ( 2 );
+with draft;
+
+define behavior for ZSO_HD_R_1967 alias Header
+implementation in class zcl_bp_so_hd_r_1967 unique
+persistent table ztso_hd_1967
+draft table ztso_hd_d_1967
+lock master
+total etag LastChangedAt // Global
+etag master LocalLastChangedAt //Per instance
+authorization master ( instance, global )
+{
+  //  create ( authorization : global ); // Not needed, global already defined
+  create;
+  update;
+  delete;
+  //When creating new records it's instance level
+  // Requires authorization on update
+
+  association _Detail { create ( features : instance, authorization : update ); with draft; }
+
+  // characteristics of each field
+  field ( numbering : managed, readonly ) SalesUUID;
+  field ( readonly ) SalesID, Orderstatus, CreatedOn, CreatedBy, ChangedBy,
+  LocalLastChangedAt, LastChangedAt;
+  field ( mandatory ) Email, Firstname, Lastname, Country, DeliveryDate;
+
+  //features of each field
+  field ( features : instance ) DeliveryDate;
+
+  determination setSalesID on save { create; }
+  determination setStatusProgress on modify { create; }
+
+  // Only returns one records and it comes back to the same instance
+  action ( features : instance, authorization : update ) acceptSale result [1] $self;
+  action ( features : instance, authorization : update ) rejectSale result [1] $self;
+
+  //It needs a method assigned
+  validation validateEmail on save { create; update; field Email; }
+  validation validateDeliveryDate on save { create; update; field DeliveryDate; }
+  determine action validateEmailAction { validation validateEmail; }
+  determine action validateDeliveryDateAction { validation validateDeliveryDate; }
+
+  // Side effects
+  side effects
+  {
+    determine action validateEmailAction executed on field Email affects messages;
+    determine action validateDeliveryDateAction executed on field DeliveryDate affects messages;
+  }
+
+  //Draft actions
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume with additional implementation;
+
+  //Actions taken upon creation of draft
+  draft determine action Prepare
+  {
+    validation validateEmail;
+    validation validateDeliveryDate;
+  }
+
+  //Mapping
+  mapping for ztso_hd_1967
+    {
+      SalesUUID          = sales_uuid;
+      SalesID            = sales_id;
+      Email              = email;
+      Firstname          = firstname;
+      Lastname           = lastname;
+      Country            = country;
+      DeliveryDate       = deliverydate;
+      OrderStatus        = orderstatus;
+      Imageurl           = imageurl;
+      CreatedOn          = createdon;
+      CreatedBy          = createdby;
+      ChangedBy          = changedby;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+
+}
+
+define behavior for ZSO_IT_R_1967 alias Detail
+implementation in class zcl_bp_so_it_r_1967 unique
+persistent table ztso_it_1967
+draft table ztso_it_d_1967
+lock dependent by _Header
+authorization dependent by _Header
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  association _Header { with draft; }
+  field ( numbering : managed, readonly ) ItemUUID;
+  field ( readonly ) SalesUUID, ItemID, LocalLastChangedAt;
+  field ( mandatory ) Name, Description, ReleasedDate, DiscontinuedDate, Price, Quantity;
+
+  mapping for ztso_it_1967
+    {
+      ItemUUID           = item_uuid;
+      ItemID             = item_id;
+      SalesUUID          = sales_uuid;
+      Name               = name;
+      Description        = description;
+      ReleasedDate       = releaseddate;
+      DiscontinuedDate   = discontinueddate;
+      Price              = price;
+      Currency           = currency;
+      Height             = height;
+      Width              = width;
+      Depth              = depth;
+      UnitOfMeasure      = unitofmeasure;
+      Quantity           = quantity;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+}
