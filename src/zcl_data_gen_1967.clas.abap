@@ -82,9 +82,11 @@ CLASS zcl_data_gen_1967 IMPLEMENTATION.
     ENDTRY.
 
     DELETE FROM ztso_hd_1967.
+    DELETE FROM ztso_hd_d_1967.
     DELETE FROM ztso_it_1967.
-    INSERT ztso_hd_1967 FROM TABLE @lt_header.
-    INSERT ztso_it_1967 FROM TABLE @lt_detail.
+    DELETE FROM ztso_it_d_1967.
+    "INSERT ztso_hd_1967 FROM TABLE @lt_header.
+    "INSERT ztso_it_1967 FROM TABLE @lt_detail.
 
 
     IF sy-subrc = 0.

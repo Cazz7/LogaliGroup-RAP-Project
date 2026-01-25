@@ -30,7 +30,7 @@ authorization master ( instance, global )
   field ( features : instance ) DeliveryDate;
 
   determination setSalesID on save { create; }
-  determination setStatusProgress on modify { create; }
+  determination setStatusNew on modify { create; }
 
   // Only returns one records and it comes back to the same instance
   action ( features : instance, authorization : update ) acceptSale result [1] $self;

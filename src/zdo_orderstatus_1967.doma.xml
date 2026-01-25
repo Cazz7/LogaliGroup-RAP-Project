@@ -34,6 +34,13 @@
      <DOMVALUE_L>3</DOMVALUE_L>
      <DDTEXT>Cancelled</DDTEXT>
     </DD07V>
+    <DD07V>
+     <DOMNAME>ZDO_ORDERSTATUS_1967</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>0</DOMVALUE_L>
+     <DDTEXT>Unchanged</DDTEXT>
+    </DD07V>
    </DD07V_TAB>
   </asx:values>
  </asx:abap>

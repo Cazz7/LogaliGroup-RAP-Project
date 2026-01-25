@@ -10,17 +10,17 @@ define view entity ZSO_IT_C_1967
     SalesUUID,
     Name,
     Description,
-    Releaseddate,
-    Discontinueddate,
+    ReleasedDate,
+    DiscontinuedDate,
     Price,
     Currency,
     Height,
     Width,
     Depth,
-    Unitofmeasure,
+    UnitOfMeasure,
     Quantity,
     LocalLastChangedAt,
     /* Associations */
-    _Currency,  
+    //_Currency,  
     _Header : redirected to parent ZSO_HD_C_1967 
 }

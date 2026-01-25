@@ -1,0 +1,30 @@
+interface;
+use draft;
+
+define behavior for ZSO_HD_I_1967 alias Header
+{
+  use create;
+  use update;
+  use delete;
+
+  use action acceptSale;
+  use action rejectSale;
+  use action validateEmailAction;
+  use action validateDeliveryDateAction;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Detail { create; with draft; }
+}
+
+define behavior for ZSO_IT_I_1967 alias Detail
+{
+  use update;
+  use delete;
+
+  use association _Header { with draft; }
+}

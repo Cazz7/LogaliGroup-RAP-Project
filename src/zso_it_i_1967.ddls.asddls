@@ -4,22 +4,23 @@
 define view entity ZSO_IT_I_1967
   as projection on ZSO_IT_R_1967
 {
-  key ItemUuid,
-      ItemId,
+  key ItemUUID,
+      ItemID,
       SalesUUID,
       Name,
       Description,
-      Releaseddate,
-      Discontinueddate,
+      ReleasedDate,
+      DiscontinuedDate,
       Price,
       Currency,
       Height,
       Width,
       Depth,
-      Unitofmeasure,
+      UnitOfMeasure,
       Quantity,
       LocalLastChangedAt,
       /* Associations */
-      _Currency,
+      //test
+      //_Currency,
       _Header : redirected to parent ZSO_HD_I_1967
 }
