@@ -31,6 +31,7 @@ authorization master ( instance, global )
 
   determination setSalesID on save { create; }
   determination setStatusNew on modify { create; }
+  determination setCreatedOnDate on modify { create; }
 
   // Only returns one records and it comes back to the same instance
   action ( features : instance, authorization : update ) acceptSale result [1] $self;

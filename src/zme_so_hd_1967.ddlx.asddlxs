@@ -83,8 +83,10 @@ annotate entity ZSO_HD_C_1967 with
   @UI: { lineItem: [{  position:  60, importance:  #HIGH }],
         identification: [{ position: 60 }] }
   Deliverydate;
-  @UI: { lineItem: [{  position:  70, importance:  #HIGH }],
-          identification: [{ position: 70 }] }
+  @UI: { lineItem: [{  position:  70, importance:  #MEDIUM }],
+          identification: [{ position: 70, label: 'Sales Order Status' }],
+          selectionField: [{ position: 40 }],
+          textArrangement: #TEXT_ONLY }
   Orderstatus;
   @UI: { lineItem: [{  position:  80, importance:  #HIGH }],
           identification: [{ position: 80 }] }

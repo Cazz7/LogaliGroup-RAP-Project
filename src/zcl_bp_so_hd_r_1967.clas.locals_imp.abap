@@ -38,6 +38,8 @@ CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS validateEmail FOR VALIDATE ON SAVE
       IMPORTING keys FOR Header~validateEmail.
+    METHODS setCreatedOnDate FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR Header~setCreatedOnDate.
 
 ENDCLASS.
 
@@ -84,12 +86,59 @@ CLASS lhc_Header IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD setSalesID.
+
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    FIELDS ( SalesID )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    DELETE headers WHERE SalesID IS NOT INITIAL.
+
+    " Obtengo el último registro guardado
+    SELECT SINGLE FROM zso_hd_r_1967
+    FIELDS MAX( SalesID )
+    INTO @DATA(max_sales_id).
+
+    " Desde el frontend pueden mandarme más de un registro
+*  max_id + 1
+*  max_id + 2
+*  max_id + 3
+    MODIFY ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    UPDATE
+    FIELDS ( SalesID )
+    WITH VALUE #( FOR header IN headers INDEX INTO i ( %tky = header-%tky
+                                                       SalesID = max_sales_id + i ) ).
+
   ENDMETHOD.
 
   METHOD validateDeliveryDate.
   ENDMETHOD.
 
   METHOD validateEmail.
+  ENDMETHOD.
+
+  METHOD setCreatedOnDate.
+
+    " EML
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    FIELDS ( OrderStatus )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    DELETE headers WHERE OrderStatus IS NOT INITIAL.
+
+    CHECK headers IS NOT INITIAL.
+
+    MODIFY ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    UPDATE
+    FIELDS ( OrderStatus )
+    WITH VALUE #( FOR header IN headers ( %tky = header-%tky
+                  CreatedOn = cl_abap_context_info=>get_system_date( ) ) ).
+
   ENDMETHOD.
 
 ENDCLASS.
