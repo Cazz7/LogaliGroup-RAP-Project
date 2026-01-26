@@ -3,7 +3,8 @@ CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     CONSTANTS:
       BEGIN OF order_status,
-        new       TYPE i VALUE 1, " New
+        new        type i VALUE 0,
+        open       TYPE i VALUE 1, " New
         delivered TYPE i VALUE 2, " Delivered
         cancelled TYPE i VALUE 3, " Cancelled
       END OF order_status.

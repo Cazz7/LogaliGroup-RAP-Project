@@ -16,18 +16,24 @@
 @Search.searchable: true
 annotate entity ZSO_HD_C_1967 with
 {
-  @UI.facet: [{ id: 'Detail',
+  @UI.facet: [{ id: 'Sales',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Sales',
+                position: 10 },
+                { id: 'Detail',
                 purpose: #STANDARD,
                 type: #LINEITEM_REFERENCE,
                 label: 'Detail',
-                position: 10,
+                position: 20,
                 targetElement: '_Detail' } ]
 
   @UI.hidden: true
   SalesUUID;
+  
   @Search.defaultSearchElement: true
-  @UI: { lineItem: [{ position: 10,
-                      importance: #HIGH },
+  
+  @UI: { lineItem: [{ position: 10, importance: #HIGH, label : 'Sales ID'},
 
                      { position: 10,
                        importance: #HIGH,
@@ -39,8 +45,9 @@ annotate entity ZSO_HD_C_1967 with
                        importance: #HIGH,
                        type: #FOR_ACTION,
                        dataAction: 'rejectSale',
-                       label: 'Reject Sale',
-                       invocationGrouping: #CHANGE_SET }
+                       label: 'Reject Sale'
+                      //, invocationGrouping: #CHANGE_SET
+                        }
                    ],
 
           selectionField: [{ position: 10 }],
