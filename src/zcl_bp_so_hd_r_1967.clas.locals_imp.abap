@@ -3,8 +3,8 @@ CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     CONSTANTS:
       BEGIN OF order_status,
-        new        type i VALUE 0,
-        open       TYPE i VALUE 1, " New
+        new       TYPE i VALUE 0,
+        open      TYPE i VALUE 1, " New
         delivered TYPE i VALUE 2, " Delivered
         cancelled TYPE i VALUE 3, " Cancelled
       END OF order_status.
@@ -55,9 +55,47 @@ CLASS lhc_Header IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD acceptSale.
+
+    " EML
+    " Modify and read the entity
+    MODIFY ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    UPDATE
+    FIELDS ( OrderStatus )
+    WITH VALUE #( FOR key IN keys ( %tky = key-%tky
+                                          OrderStatus = order_status-open  ) ).
+
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    ALL FIELDS
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    result = VALUE #( FOR header IN headers ( %tky = header-%tky
+                                              %param = header ) ).
+
   ENDMETHOD.
 
   METHOD rejectSale.
+
+    " EML
+    " Modify and read the entity
+    MODIFY ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    UPDATE
+    FIELDS ( OrderStatus )
+    WITH VALUE #( FOR key IN keys ( %tky = key-%tky
+                                          OrderStatus = order_status-cancelled  ) ).
+
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    ALL FIELDS
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    result = VALUE #( FOR header IN headers ( %tky = header-%tky
+                                              %param = header ) ).
+
   ENDMETHOD.
 
   METHOD Resume.
@@ -114,9 +152,72 @@ CLASS lhc_Header IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD validateDeliveryDate.
+
+    DATA min_delivery_date TYPE zde_deliverydate_1967.
+
+    " EML
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    FIELDS ( DeliveryDate )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    CHECK headers IS NOT INITIAL.
+
+    LOOP AT headers INTO DATA(header).
+
+      min_delivery_date = cl_abap_context_info=>get_system_date( ) + 3.
+
+      CHECK header-DeliveryDate <=  min_delivery_date.
+
+      APPEND VALUE #( %tky = header-%tky
+                      %state_area = 'VALIDATE_DEL_DATE'
+                      %msg = me->new_message(
+                       id = 'ZMC_SALES_1967'
+                       number = '001'
+                       severity = ms-error )
+                      %element-DeliveryDate = header-DeliveryDate ) TO reported-header.
+
+    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD validateEmail.
+
+    DATA matcher TYPE REF TO cl_abap_matcher.
+
+    " EML
+    READ ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
+    ENTITY Header
+    FIELDS ( Email )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(headers).
+
+    DELETE headers WHERE Email IS NOT INITIAL.
+
+    CHECK headers IS NOT INITIAL.
+
+    LOOP AT headers INTO DATA(header).
+
+      matcher = cl_abap_matcher=>create(
+             pattern = `\w+(\.\w+)*@(\w+\.)+(\w{2,4})`
+             ignore_case = 'X'
+             text = header-Email ).
+
+      IF matcher->match( ) IS INITIAL.
+
+        APPEND VALUE #( %tky = header-%tky
+                        %state_area = 'VALIDATE_DEL_EMAIL'
+                        %msg = me->new_message(
+                         id = 'ZMC_SALES_1967'
+                         number = '002'
+                         severity = ms-error )
+                        %element-Email = header-Email ) TO reported-header.
+
+      ENDIF.
+
+    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD setCreatedOnDate.
@@ -128,14 +229,14 @@ CLASS lhc_Header IMPLEMENTATION.
     WITH CORRESPONDING #( keys )
     RESULT DATA(headers).
 
-    DELETE headers WHERE OrderStatus IS NOT INITIAL.
+    DELETE headers WHERE CreatedOn IS NOT INITIAL.
 
     CHECK headers IS NOT INITIAL.
 
     MODIFY ENTITIES OF zso_hd_r_1967 IN LOCAL MODE
     ENTITY Header
     UPDATE
-    FIELDS ( OrderStatus )
+    FIELDS ( CreatedOn )
     WITH VALUE #( FOR header IN headers ( %tky = header-%tky
                   CreatedOn = cl_abap_context_info=>get_system_date( ) ) ).
 

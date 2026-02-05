@@ -95,6 +95,9 @@ etag master LocalLastChangedAt
   update;
   delete;
   association _Header { with draft; }
+
+  determination setItemID on save { create; }
+
   field ( numbering : managed, readonly ) ItemUUID;
   field ( readonly ) SalesUUID, ItemID, LocalLastChangedAt;
   field ( mandatory ) Name, Description, ReleasedDate, DiscontinuedDate, Price, Quantity;

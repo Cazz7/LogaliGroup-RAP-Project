@@ -3,7 +3,12 @@
 @UI: { headerInfo: { typeName: 'Detail',
                      typeNamePlural: 'Details',
                      title: { type: #STANDARD,
-                              value: 'ItemID' } } }
+                              value: 'ItemID' },
+                              description: {
+        type: #STANDARD,
+        value: 'Description'
+    }
+                               } }
 
 annotate entity ZSO_IT_C_1967
     with 
@@ -29,16 +34,16 @@ Name;
 Description;
 @UI: { lineItem:       [ { position: 40, importance: #MEDIUM } ],
          identification: [ { position: 40 } ] }
-Releaseddate;
+ReleasedDate;
 @UI: { lineItem:       [ { position: 50, importance: #HIGH } ],
          identification: [ { position: 50 } ] }
-Discontinueddate;
+DiscontinuedDate;
 @UI: { lineItem:       [ { position: 60, importance: #MEDIUM } ],
          identification: [ { position: 60 } ] }
 Price;
-@UI: { lineItem:       [ { position: 70, importance: #HIGH } ],
-         identification: [ { position: 70 } ] }
-Currency;
+//@UI: { lineItem:       [ { position: 70, importance: #HIGH } ],
+//         identification: [ { position: 70 } ] }
+//Currency;
 @UI: { lineItem:       [ { position: 80, importance: #HIGH } ],
          identification: [ { position: 80 } ] }
 Height;
@@ -48,9 +53,9 @@ Width;
 @UI: { lineItem:       [ { position: 100, importance: #HIGH } ],
          identification: [ { position: 100 } ] }
 Depth;
-@UI: { lineItem:       [ { position: 110, importance: #HIGH } ],
-         identification: [ { position: 110 } ] }
-Unitofmeasure;
+//@UI: { lineItem:       [ { position: 110, importance: #HIGH } ],
+//         identification: [ { position: 110 } ] }
+//UnitOfMeasure;
 @UI: { lineItem:       [ { position: 120, importance: #HIGH } ],
          identification: [ { position: 120 } ] }
 Quantity;

@@ -19,10 +19,14 @@ define view entity ZSO_IT_R_1967
       description           as Description,
       releaseddate          as ReleasedDate,
       discontinueddate      as DiscontinuedDate,
+      @Semantics.amount.currencyCode: 'currency'
       price                 as Price,
       currency              as Currency,
+      @Semantics.quantity.unitOfMeasure : 'UnitOfMeasure' 
       height                as Height,
+      @Semantics.quantity.unitOfMeasure : 'UnitOfMeasure' 
       width                 as Width,
+      @Semantics.quantity.unitOfMeasure : 'UnitOfMeasure' 
       depth                 as Depth,
       unitofmeasure         as UnitOfMeasure,
       quantity              as Quantity,

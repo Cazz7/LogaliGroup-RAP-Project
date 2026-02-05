@@ -14,6 +14,7 @@ define root view entity ZSO_HD_R_1967
       country               as Country,
       deliverydate          as DeliveryDate,
       orderstatus           as OrderStatus,
+      @Semantics.imageUrl: true
       imageurl              as Imageurl,
       createdon             as CreatedOn,
       @Semantics.user.createdBy: true
