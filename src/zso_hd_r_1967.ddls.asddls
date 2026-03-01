@@ -4,6 +4,7 @@
 define root view entity ZSO_HD_R_1967
   as select from ztso_hd_1967 as Header
   composition [0..*] of ZSO_IT_R_1967 as _Detail 
+  association [1..1] to ZSO_STATUS_R_1967 as _OrderStatus on  $projection.OrderStatus = _OrderStatus.so_status
 {
 
   key sales_uuid            as SalesUUID,
@@ -29,6 +30,7 @@ define root view entity ZSO_HD_R_1967
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt,
       
-      _Detail
+      _Detail,
+      _OrderStatus
 
 }

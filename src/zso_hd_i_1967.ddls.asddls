@@ -11,8 +11,8 @@ as projection on ZSO_HD_R_1967
     Firstname,
     Lastname,
     Country,
-    Deliverydate,
-    Orderstatus,
+    DeliveryDate,
+    OrderStatus,
     Imageurl,
     CreatedOn,
     CreatedBy,
@@ -20,5 +20,6 @@ as projection on ZSO_HD_R_1967
     LocalLastChangedAt,
     LastChangedAt,
     /* Associations */
-    _Detail : redirected to composition child ZSO_IT_I_1967
+    _Detail : redirected to composition child ZSO_IT_I_1967,
+    _OrderStatus
 }
