@@ -19,6 +19,8 @@ CLASS zcl_data_gen_1967 IMPLEMENTATION.
 
     DATA: lt_header TYPE TABLE OF ztso_hd_1967.
     DATA: lt_DETAIL TYPE TABLE OF ztso_IT_1967.
+    DATA: lt_status TYPE TABLE OF ztso_status_1967.
+    DATA: lt_status_t TYPE TABLE OF ztso_stat_t_1967.
 
     out->write( 'Adding DATA' ).
 
@@ -75,6 +77,70 @@ CLASS zcl_data_gen_1967 IMPLEMENTATION.
         quantity = '998'
          ) TO lt_detail.
 
+        APPEND VALUE ztso_status_1967(
+        so_status = '0'
+        ) TO lt_status.
+
+        APPEND VALUE ztso_status_1967(
+        so_status = '1'
+        ) TO lt_status.
+
+        APPEND VALUE ztso_status_1967(
+        so_status = '2'
+        ) TO lt_status.
+
+        APPEND VALUE ztso_status_1967(
+        so_status = '3'
+        ) TO lt_status.
+
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '0'
+        language = 'E'
+        text = 'Unchanged'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '1'
+        language = 'E'
+        text = 'New'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '2'
+        language = 'E'
+        text = 'Delivered'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '3'
+        language = 'E'
+        text = 'Cancelled'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '0'
+        language = 'S'
+        text = 'Sin cambios'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '1'
+        language = 'S'
+        text = 'Nuevo'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '2'
+        language = 'S'
+        text = 'Entregado'
+        ) TO lt_status_t.
+
+        APPEND VALUE ztso_stat_t_1967(
+        so_status = '3'
+        language = 'S'
+        text = 'Cancelado'
+        ) TO lt_status_t.
 
       CATCH cx_uuid_error.
         "handle exception
@@ -85,8 +151,12 @@ CLASS zcl_data_gen_1967 IMPLEMENTATION.
     DELETE FROM ztso_hd_d_1967.
     DELETE FROM ztso_it_1967.
     DELETE FROM ztso_it_d_1967.
-    "INSERT ztso_hd_1967 FROM TABLE @lt_header.
-    "INSERT ztso_it_1967 FROM TABLE @lt_detail.
+    DELETE FROM ztso_status_1967.
+    DELETE FROM ztso_stat_t_1967.
+    INSERT ztso_hd_1967 FROM TABLE @lt_header.
+    INSERT ztso_it_1967 FROM TABLE @lt_detail.
+    INSERT ztso_status_1967 FROM TABLE @lt_status.
+    INSERT ztso_stat_t_1967 FROM TABLE @lt_status_t.
 
 
     IF sy-subrc = 0.
